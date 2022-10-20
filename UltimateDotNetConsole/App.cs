@@ -5,32 +5,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UltimateDotNetConsole
+namespace UltimateDotNetConsole;
+
+public class App
 {
-    public class App
+    private readonly IMessages _messages;
+
+    public App(IMessages messages)
     {
-        private readonly IMessages _messages;
+        _messages = messages;
+    }
 
-        public App(IMessages messages)
+    public void Run(string[] args)
+    {
+        string lang = "en";
+
+        for (int i = 0; i < args.Length; i++)
         {
-            _messages = messages;
-        }
-
-        public void Run(string[] args)
-        {
-            string lang = "en";
-
-            for (int i = 0; i < args.Length; i++)
+            if (args[i].ToLower().StartsWith("--lang="))
             {
-                if (args[i].ToLower().StartsWith("-lang="))
-                {
-                    lang = args[i].Substring(6);
-                    break;
-                }
+                lang = args[i].Substring(7);
+                break;
             }
-
-            string message = _messages.Greeting(lang);
-            Console.WriteLine(message);
         }
+
+        string message = _messages.Greeting(lang);
+        Console.WriteLine(message);
     }
 }
