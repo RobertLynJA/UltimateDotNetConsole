@@ -5,20 +5,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UltimateDotNetConsole
+namespace UltimateDotNetConsole;
+
+public class App
 {
-    public class App
+    private readonly IMessages _messages;
+
+    public App(IMessages messages)
     {
-        private readonly IMessages _messages;
+        _messages = messages;
+    }
 
-        public App(IMessages messages)
-        {
-            _messages = messages;
-        }
-
-        public void Run(string[] args)
-        {
-            Console.WriteLine(_messages.Greeting);
-        }
+    public void Run(string[] args)
+    {
+        Console.WriteLine(_messages.Greeting);
     }
 }
