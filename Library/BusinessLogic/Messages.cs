@@ -12,18 +12,17 @@ namespace Library.BusinessLogic;
 public class Messages : IMessages
 {
     private ILogger<Messages> _logger;
+    private string _language;
 
-    public Messages(ILogger<Messages> logger)
+    public Messages(ILogger<Messages> logger, Language language)
     {
         _logger = logger;
+        _language = language.Current;
     }
 
-    public string Greeting(string language)
-    {
-        return LookupCustomText("Greeting", language);
-    }
+    public string Greeting { get => LookupCustomText("Greeting"); }
 
-    private string LookupCustomText(string key, string language)
+    private string LookupCustomText(string key)
     {
         JsonSerializerOptions options = new()
         {
@@ -35,7 +34,7 @@ public class Messages : IMessages
             List<CustomText>? messageSets = JsonSerializer.Deserialize<List<CustomText>>
                 (File.ReadAllText("CustomText.json"), options);
 
-            CustomText? messages = messageSets?.Where(x => x.Language == language).First();
+            CustomText? messages = messageSets?.Where(x => x.Language == _language).First();
 
             if (messages is null)
             {

@@ -2,6 +2,6 @@
 {
     public interface IMessages
     {
-        string Greeting(string language);
+        string Greeting { get; }
     }
 }

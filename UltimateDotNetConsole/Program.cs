@@ -28,6 +28,7 @@ internal class Program
         return Host.CreateDefaultBuilder(args)
             .ConfigureServices((_, services) =>
             {
+                services.AddSingleton(new Language(args));
                 services.AddSingleton<IMessages, Messages>();
                 services.AddSingleton<App>();
             });
